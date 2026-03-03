@@ -4,28 +4,28 @@ import { useState } from "react";
 
 const faqs = [
   {
-    q: "I'm not technical at all. Is that okay?",
-    a: "Absolutely. Most of our clients aren't. You describe what you want in plain language — we handle all the technical decisions, design, and development. You just review and approve.",
+    q: "I'm not technical. Is that a problem?",
+    a: "No. Most of our clients aren't. You explain what you want in your own words, we figure out how to build it. You review working demos and tell us what to change.",
   },
   {
-    q: "What if I don't know exactly what I want yet?",
-    a: "That's completely normal. We start with a free consultation call where we help you shape your idea into a concrete plan. No commitment required.",
+    q: "What if I'm not sure exactly what I need?",
+    a: "That's normal. We start with a free call where we help you figure it out. No commitment, no sales pitch. If we're a good fit, we send you a proposal.",
   },
   {
     q: "How do payments work?",
-    a: "50% upfront to start, 50% on delivery. Simple. If we can't deliver what we promised, you don't pay the second half.",
+    a: "50% upfront to start, 50% when we deliver. If we don't deliver what we agreed on, you don't pay the second half.",
   },
   {
-    q: "What happens after delivery?",
-    a: "Every package includes free support (30-90 days depending on the plan). After that, we offer affordable maintenance plans or you can manage it yourself — you own all the code.",
+    q: "What happens after you deliver?",
+    a: "Every package includes free support (30 to 90 days depending on the package). After that, we offer maintenance plans, or you can take the code and run it yourself. It's yours.",
   },
   {
-    q: "Can you add features later?",
-    a: "Of course. Many clients start with a Starter package to validate their idea, then come back for more features. We'll give you a quote for any additions.",
+    q: "Can I add features later?",
+    a: "Yes. Many clients start with a Starter to test their idea, then come back for more. We quote each addition separately.",
   },
   {
-    q: "Who actually builds it?",
-    a: "We use a combination of senior developers and cutting-edge AI development tools. This is how we deliver fast without sacrificing quality — and why we can offer fixed prices that traditional agencies can't match.",
+    q: "How can you offer fixed prices?",
+    a: "We use AI-assisted development tools alongside experienced developers. This lets us move faster than a traditional agency while keeping quality high. The savings go to you as lower, predictable pricing.",
   },
 ];
 
@@ -36,7 +36,7 @@ export default function FAQ() {
     <section className="py-24 px-6 bg-[var(--card)]/50">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-          Common questions
+          Questions
         </h2>
         <div className="space-y-4">
           {faqs.map((faq, i) => (

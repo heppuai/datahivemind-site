@@ -10,14 +10,12 @@ export default function CTA() {
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    // Send via mailto fallback for now — will be replaced with proper API
     const name = data.get("name") as string;
     const email = data.get("email") as string;
     const message = data.get("message") as string;
 
-    const mailto = `mailto:heppu@datahivemind.com?subject=New inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
-    
-    // Also try sending to our endpoint
+    const mailto = `mailto:heppu@datahivemind.com?subject=Inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+
     try {
       await fetch("/api/contact", {
         method: "POST",
@@ -36,18 +34,19 @@ export default function CTA() {
     <section id="contact" className="py-24 px-6">
       <div className="max-w-2xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          Ready to build something?
+          Let&apos;s talk about your idea
         </h2>
         <p className="text-[var(--muted)] text-lg mb-12">
-          Tell us about your idea. We&apos;ll get back to you within 24 hours with
-          an honest assessment of what&apos;s possible.
+          Describe what you need. We&apos;ll get back to you within 24 hours
+          with an honest take on what&apos;s possible, what it costs, and how
+          long it takes.
         </p>
 
         {submitted ? (
           <div className="rounded-2xl border border-[var(--accent)] bg-[var(--accent)]/10 p-8">
-            <p className="text-xl font-semibold mb-2">Thanks!</p>
+            <p className="text-xl font-semibold mb-2">Got it.</p>
             <p className="text-[var(--muted)]">
-              We&apos;ll review your message and get back to you within 24 hours.
+              We&apos;ll review your message and reply within 24 hours.
             </p>
           </div>
         ) : (
@@ -58,7 +57,7 @@ export default function CTA() {
                   htmlFor="name"
                   className="block text-sm font-medium mb-2"
                 >
-                  Your name
+                  Name
                 </label>
                 <input
                   type="text"
@@ -91,7 +90,7 @@ export default function CTA() {
                 htmlFor="message"
                 className="block text-sm font-medium mb-2"
               >
-                Tell us about your idea
+                What do you want to build?
               </label>
               <textarea
                 id="message"
@@ -99,17 +98,17 @@ export default function CTA() {
                 rows={5}
                 required
                 className="w-full px-4 py-3 rounded-xl bg-[var(--card)] border border-[var(--card-border)] focus:border-[var(--accent)] outline-none transition resize-none"
-                placeholder="I want to build an app that..."
+                placeholder="I need an app that..."
               />
             </div>
             <button
               type="submit"
               className="w-full bg-[var(--accent)] hover:bg-[var(--accent-light)] text-white py-4 rounded-xl text-lg font-semibold transition shadow-lg shadow-[var(--accent)]/25 cursor-pointer"
             >
-              Send Message
+              Send
             </button>
             <p className="text-center text-sm text-[var(--muted)]">
-              Or email us directly at{" "}
+              Or email us at{" "}
               <a
                 href="mailto:heppu@datahivemind.com"
                 className="text-[var(--accent-light)] hover:underline"
