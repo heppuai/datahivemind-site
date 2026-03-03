@@ -3,7 +3,7 @@ export default function CaseStudy() {
     <section className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-          What we&apos;ve built
+          Recent work
         </h2>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="rounded-2xl border border-[var(--card-border)] bg-[var(--card)] p-8">
@@ -12,11 +12,11 @@ export default function CaseStudy() {
             </div>
             <h3 className="text-2xl font-bold mb-3">BallDay</h3>
             <p className="text-[var(--muted)] leading-relaxed mb-4">
-              A sports booking app that lets players find games, reserve courts,
-              and manage their sports calendar. Built and shipped as a fully
-              functional mobile application.
+              Sports booking app. Players find pickup games, reserve courts, and 
+              manage their schedule. Built as a full mobile app with real-time 
+              updates and payment processing.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
               <span className="text-xs bg-[var(--accent)]/10 text-[var(--accent-light)] px-3 py-1 rounded-full">
                 Mobile App
               </span>
@@ -30,16 +30,15 @@ export default function CaseStudy() {
           </div>
           <div className="rounded-2xl border border-[var(--card-border)] bg-[var(--card)] p-8">
             <div className="text-sm font-medium text-[var(--accent-light)] mb-2">
-              Business Automation
+              Business Platform
             </div>
             <h3 className="text-2xl font-bold mb-3">Service Marketplace</h3>
             <p className="text-[var(--muted)] leading-relaxed mb-4">
-              An end-to-end booking and dispatch platform for a home services
-              company. Customers book online, vendors get dispatched
-              automatically, and the business owner sees everything in one
-              dashboard.
+              Booking and dispatch system for a home services company. Customers 
+              book online, vendors get assigned automatically, owner tracks 
+              everything from one dashboard.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
               <span className="text-xs bg-[var(--accent)]/10 text-[var(--accent-light)] px-3 py-1 rounded-full">
                 Marketplace
               </span>
