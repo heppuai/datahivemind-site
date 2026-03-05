@@ -3,10 +3,14 @@
 import { useState } from "react";
 
 export default function CTA() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle"
+  );
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setStatus("sending");
+
     const form = e.currentTarget;
     const data = new FormData(form);
 
@@ -14,20 +18,22 @@ export default function CTA() {
     const email = data.get("email") as string;
     const message = data.get("message") as string;
 
-    const mailto = `mailto:heppu@datahivemind.com?subject=Inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
-
     try {
-      await fetch("/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       });
-    } catch {
-      // Fallback silently
-    }
 
-    window.location.href = mailto;
-    setSubmitted(true);
+      if (!res.ok) {
+        throw new Error("Request failed");
+      }
+
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -42,7 +48,7 @@ export default function CTA() {
           long it takes.
         </p>
 
-        {submitted ? (
+        {status === "sent" ? (
           <div className="rounded-2xl border border-[var(--accent)] bg-[var(--accent)]/10 p-8">
             <p className="text-xl font-semibold mb-2">Got it.</p>
             <p className="text-[var(--muted)]">
@@ -101,11 +107,19 @@ export default function CTA() {
                 placeholder="I need an app that..."
               />
             </div>
+
+            {status === "error" && (
+              <p className="text-red-400 text-sm text-center">
+                Something went wrong. Please try again or email us directly.
+              </p>
+            )}
+
             <button
               type="submit"
-              className="w-full bg-[var(--accent)] hover:bg-[var(--accent-light)] text-white py-4 rounded-xl text-lg font-semibold transition shadow-lg shadow-[var(--accent)]/25 cursor-pointer"
+              disabled={status === "sending"}
+              className="w-full bg-[var(--accent)] hover:bg-[var(--accent-light)] text-white py-4 rounded-xl text-lg font-semibold transition shadow-lg shadow-[var(--accent)]/25 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Send
+              {status === "sending" ? "Sending..." : "Send"}
             </button>
             <p className="text-center text-sm text-[var(--muted)]">
               Or email us at{" "}

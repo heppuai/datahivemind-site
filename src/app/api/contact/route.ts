@@ -1,4 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const NOTIFICATION_EMAIL =
+  process.env.NOTIFICATION_EMAIL || "heppu@datahivemind.com";
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,14 +26,56 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Send notification email via SMTP
-    // For now, we'll store submissions and rely on the mailto fallback
-    // TODO: Add SMTP sending via API route once we have env vars configured
-    
-    console.log("New inquiry:", { name, email, message, timestamp: new Date().toISOString() });
+    if (
+      typeof name !== "string" ||
+      typeof email !== "string" ||
+      typeof message !== "string"
+    ) {
+      return NextResponse.json(
+        { error: "Invalid field types" },
+        { status: 400 }
+      );
+    }
 
-    return NextResponse.json({ ok: true });
-  } catch {
+    // Basic email format check
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 }
+      );
+    }
+
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email.trim());
+    const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
+
+    const { data, error } = await resend.emails.send({
+      from: "Datahivemind <noreply@datahivemind.com>",
+      to: NOTIFICATION_EMAIL,
+      replyTo: email.trim(),
+      subject: `New inquiry from ${name}`,
+      html: `
+        <h2>New inquiry from datahivemind.com</h2>
+        <p><strong>Name:</strong> ${safeName}</p>
+        <p><strong>Email:</strong> ${safeEmail}</p>
+        <h3>Message:</h3>
+        <p>${safeMessage}</p>
+        <hr>
+        <p><small>Sent: ${new Date().toISOString()}</small></p>
+      `,
+    });
+
+    if (error) {
+      console.error("Resend error:", error);
+      return NextResponse.json(
+        { error: "Failed to send message" },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ ok: true, id: data?.id });
+  } catch (err) {
+    console.error("Contact form error:", err);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://datahivemind.com",
   },
+  metadataBase: new URL("https://www.datahivemind.com"),
 };
 
 export default function RootLayout({
