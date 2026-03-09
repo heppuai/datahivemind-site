@@ -27,6 +27,12 @@ export default function Navbar() {
             How It Works
           </a>
           <a
+            href="/blog"
+            className="text-sm text-[var(--muted)] hover:text-white transition"
+          >
+            Blog
+          </a>
+          <a
             href="#contact"
             className="text-sm bg-[var(--accent)] hover:bg-[var(--accent-light)] text-white px-4 py-2 rounded-lg transition font-medium"
           >
