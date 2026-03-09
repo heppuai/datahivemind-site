@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
@@ -51,6 +52,7 @@ export default function BlogPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

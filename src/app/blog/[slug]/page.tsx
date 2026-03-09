@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 
 interface PageProps {
@@ -63,6 +64,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         </article>
       </main>
+      <Footer />
     </>
   );
 }
