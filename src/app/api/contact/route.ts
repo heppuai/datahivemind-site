@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not configured");
+  }
+  return new Resend(apiKey);
+}
 
 const NOTIFICATION_EMAIL =
   process.env.NOTIFICATION_EMAIL || "heppu@datahivemind.com";
@@ -49,6 +55,7 @@ export async function POST(req: NextRequest) {
     const safeEmail = escapeHtml(email.trim());
     const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
 
+    const resend = getResendClient();
     const { data, error } = await resend.emails.send({
       from: "Datahivemind <noreply@datahivemind.com>",
       to: NOTIFICATION_EMAIL,
